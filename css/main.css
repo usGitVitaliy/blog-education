@@ -8,32 +8,8 @@ header, footer {
 }
 
 main {
-    margin-top: 20%;
-    margin-bottom: 5%;
-}
-
-@media (min-width: 540px) and (max-width: 719px) {
-    main {
-        margin-top: 10%;
-    }
-}
-
-@media (min-width: 720px) and (max-width: 959px) {
-    main {
-        margin-top: 8%;
-    }
-}
-
-@media (min-width: 960px) and (max-width: 1139px) {
-    main {
-        margin-top: 6%;
-    }
-}
-
-@media (min-width: 1140px) {
-    main {
-        margin-top: 5%;
-    }
+    margin-top: 70px;
+    margin-bottom: 40px;
 }
 
 a {
@@ -55,4 +31,8 @@ footer div {
 
 #nav-panel-text {
     color: rgb(255, 255, 224) !important;
+}
+
+a.disabled {
+    background-color: darkslateblue;
 }
