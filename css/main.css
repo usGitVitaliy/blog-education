@@ -5,19 +5,54 @@ body {
 header, footer {
     color: rgb(255, 255, 224);
     background-color: mediumslateblue;
-    /*background-color: rgb(123, 104, 238);*/
 }
 
 main {
+    margin-top: 20%;
+    margin-bottom: 5%;
+}
+
+@media (min-width: 540px) and (max-width: 719px) {
+    main {
+        margin-top: 10%;
+    }
+}
+
+@media (min-width: 720px) and (max-width: 959px) {
+    main {
+        margin-top: 8%;
+    }
+}
+
+@media (min-width: 960px) and (max-width: 1139px) {
+    main {
+        margin-top: 6%;
+    }
+}
+
+@media (min-width: 1140px) {
+    main {
+        margin-top: 5%;
+    }
 }
 
 a {
-    color: rgb(255, 255, 224);
+    color: rgb(255, 255, 224) !important;
 }
 
 a:hover {
     color: rgb(255, 255, 224);
-    /*background-color: rgb(123, 104, 161);*/
     background-color: slateblue;
-    /*background-color: darkslateblue;*/
+}
+
+#nav-expand-button {
+    background-color: aliceblue;
+}
+
+footer div {
+    text-align: center;
+}
+
+#nav-panel-text {
+    color: rgb(255, 255, 224) !important;
 }
