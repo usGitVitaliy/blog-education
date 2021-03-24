@@ -8,15 +8,16 @@ header, footer {
 }
 
 main {
+    color: mediumslateblue !important;
     margin-top: 70px;
     margin-bottom: 40px;
 }
 
-a {
+a.nav-link {
     color: rgb(255, 255, 224) !important;
 }
 
-a:hover {
+a.nav-link:hover {
     color: rgb(255, 255, 224);
     background-color: slateblue;
 }
@@ -40,4 +41,15 @@ a.disabled {
 form.autorization {
     border: 2px solid LightSteelBlue;
     border-radius: 10px;
+}
+
+.profile-container {
+    border: 2px solid LightSteelBlue;
+    border-radius: 10px;
+}
+
+.img-profile, div.img-container-profile {
+    width: 320px;
+    height: 320px;
+    background-color: lightsteelblue;
 }
