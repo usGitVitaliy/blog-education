@@ -38,12 +38,7 @@ a.disabled {
     background-color: darkslateblue;
 }
 
-form.autorization {
-    border: 2px solid LightSteelBlue;
-    border-radius: 10px;
-}
-
-.profile-container {
+form.autorization, .profile-container {
     border: 2px solid LightSteelBlue;
     border-radius: 10px;
 }
