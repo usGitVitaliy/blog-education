@@ -36,3 +36,8 @@ footer div {
 a.disabled {
     background-color: darkslateblue;
 }
+
+form.autorization {
+    border: 2px solid LightSteelBlue;
+    border-radius: 10px;
+}
