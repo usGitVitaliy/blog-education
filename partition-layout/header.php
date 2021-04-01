@@ -1,5 +1,5 @@
-<header class="row fixed-top">
-    <div class="col">
+<header class="row fixed-top justify-content-center">
+    <div class="col col-lg-auto">
         <?php
 
         require_once 'nav.php'
