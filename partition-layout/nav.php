@@ -37,17 +37,31 @@
 NAV;
 //--END-->>
             //добавляем disabled к ссылке активной страницы
+            //<a href="../content/main.php" class="nav-link">Главная</a>
+            //==>
+            //<a href="../content/main.php" class="nav-link disabled">Главная</a>
             $searchFileName = $pageDataObj->getPagePath();
             $LengthFileName = strcspn($searchFileName, '.php');
             $searchFileName = substr($searchFileName, 0, $LengthFileName);
             $searchPattern = "#<a href=\"\.\./content/$searchFileName\.php\" class=\"nav-link\">#";
-            $navigationContent = preg_replace($searchPattern, "<a href=\"#\" class=\"nav-link disabled\">", $navigationContent);
+
+            $navigationContent = preg_replace(
+                $searchPattern,
+                "<a href=\"#\" class=\"nav-link disabled\">",
+                $navigationContent
+            );
 
             //добавляем <span class="sr-only">(текущая)</span> в ссылку
-            $navigationContent = preg_replace("#(?<=disabled\")(.+)(?=</a>)#", "$1<span class=\"sr-only\">(текущая)</span>", $navigationContent);
+            //<a href="../content/main.php" class="nav-link disabled">Главная</a>
+            //==>
+         //<a href="../content/main.php" class="nav-link disabled">Главная<span class=\"sr-only\">(текущая)</span></a>
+            $navigationContent = preg_replace(
+                "#(?<=disabled\")(.+)(?=</a>)#",
+                "$1<span class=\"sr-only\">(текущая)</span>",
+                $navigationContent
+            );
 
             echo $navigationContent;
-            //echo $searchFileName;
             ?>
         </ul>
     </div>
