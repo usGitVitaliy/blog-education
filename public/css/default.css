@@ -1,0 +1,50 @@
+body {
+    background-color: aliceblue;
+}
+
+header, footer {
+    color: rgb(255, 255, 224);
+    background-color: mediumslateblue;
+}
+
+main {
+    color: mediumslateblue !important;
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+a.nav-link {
+    color: rgb(255, 255, 224) !important;
+}
+
+a.nav-link:hover {
+    color: rgb(255, 255, 224);
+    background-color: slateblue;
+}
+
+#nav-expand-button {
+    background-color: aliceblue;
+}
+
+footer div {
+    text-align: center;
+}
+
+#nav-panel-text {
+    color: rgb(255, 255, 224) !important;
+}
+
+a.disabled {
+    background-color: darkslateblue;
+}
+
+form.autorization, .profile-container {
+    border: 2px solid LightSteelBlue;
+    border-radius: 10px;
+}
+
+.img-profile, div.img-container-profile {
+    width: 320px;
+    height: 320px;
+    background-color: lightsteelblue;
+}
