@@ -54,6 +54,4 @@ $arrListPosts[] = array(
 );
 
 $listPosts = serialize($arrListPosts);
-
-$pathServerRoot = $_SERVER['DOCUMENT_ROOT'] . '/';
-file_put_contents($pathServerRoot . 'data-storage/main-list-posts', $listPosts);
+file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/Mailman/Mvcframework/data/storage/main-list-posts", $listPosts);
