@@ -1,26 +1,42 @@
 <div class="col col-lg-7 text-center">
     <h1>Список постов</h1>
-    <div class="list-group">
-        <?php if (is_array($currentPageData)) : ?>
-            <?php
+    <div class="list-group"><?php
 
-            $amountPosts = count($currentPageData);
-            ?>
+    if (is_array($currentPageData)) {
+        foreach ($currentPageData as $listItem) {
+            echo "\n<a href=\"\" class=\"list-group-item list-group-item-action\">
+                <div>
+                    <h2 class=\"h5\">";
 
-            <?php for ($i = 0; $i < $amountPosts; ++$i) :?>
-                <?php $listItem = current($currentPageData); ?>
-                <a href="" class="list-group-item list-group-item-action">
-                    <div>
-                        <h2 class="h5"><?=$listItem["headerPost"]?></h2>
-                        <small>Автор: <?=$listItem["authorPost_LastName"]?> <?=$listItem["authorPost_FirstName"]?>
-                        </small>
-                    </div>
-                </a>
-                <?php  next($currentPageData); ?>
-            <?php endfor; ?>
+            if (isset($listItem["headerPost"])) {
+                echo $listItem["headerPost"];
+            } else {
+                echo "";
+            }
 
-        <?php else : ?>
-            ОШИБКА! Отсутствует список постов
-        <?php endif; ?>
+            echo '</h2>
+                    <small>Автор: ';
+
+            if (isset($listItem["authorPost_LastName"])) {
+                echo "{$listItem["authorPost_LastName"]} ";
+            } else {
+                echo "";
+            }
+
+            if (isset($listItem["authorPost_FirstName"])) {
+                echo $listItem["authorPost_FirstName"];
+            } else {
+                echo "";
+            }
+
+            echo "</small>
+                </div>
+            </a>";
+        }
+    } else {
+        echo "ОШИБКА! Отсутствует список постов";
+    }
+
+    ?>
     </div>
 </div>
