@@ -15,7 +15,9 @@ class PostsController extends Controller
 
         require_once MODEL_PATH . "PostsModel.php";
         $objPostsModel = new PostsModel();
-        $currentPageData = $objPostsModel->returnList();
+
+        //$currentPageData = $objPostsModel->returnListInFile();
+        $currentPageData = $objPostsModel->returnListInDB();
 
         $this->action(__CLASS__, __METHOD__, $layoutPath, $layoutData, $currentPageData);
     }
