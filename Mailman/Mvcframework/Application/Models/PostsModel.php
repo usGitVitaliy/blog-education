@@ -2,10 +2,11 @@
 
 namespace Mailman\Mvcframework\Application\Models;
 
-//require_once "PATH_SERVER_ROOT/Mailman/Mvcframework/Application/Core/DB.php";
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/Application/Core/DB.php";
+require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/AuthorMapper.php";
+require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/PostMapper.php";
 
-use Mailman\Mvcframework\Application\Core\DB;
+use Mailman\Mvcframework\library\WorkingWithDB\AuthorMapper;
+use Mailman\Mvcframework\library\WorkingWithDB\PostMapper;
 
 class PostsModel
 {
@@ -22,32 +23,37 @@ class PostsModel
                 return null;
             }
 
-            var_dump($arrListPosts_ReadFile);
+            //var_dump($arrListPosts_ReadFile);
             return $arrListPosts_ReadFile;
         }
 
         return null;
     }
 
-    public function returnListInDB()
+    //getAllPosts
+    public function returnListPostsInDB()
     {
-        $dbObj = new DB();
-        $pdo = $dbObj->getConnetDB();
-        $stmt = $pdo->query(
-            'SELECT posts.post_item, authors.surname, authors.name 
-                        FROM posts, authors 
-                        WHERE posts.author_id = authors.id;');
+        //Получаем массив объектов Post
+        $objPostMapper = new PostMapper();
+        $postsList = $objPostMapper->returnAll();
 
+        return $this->convertToArrPost($postsList);
+    }
+
+    private function convertToArrPost($postsList)
+    {
         $arrListPosts_ReadDB = array();
 
-        foreach ($stmt as $row) {
-            $rowListPosts_ReadDB = [
-                "headerPost" => $row["post_item"],
-                "authorPost_LastName" => $row["surname"],
-                "authorPost_FirstName" => $row["name"]
-            ];
+        $objAuthorMapper = new AuthorMapper();
 
-            array_push($arrListPosts_ReadDB, $rowListPosts_ReadDB);
+        foreach ($postsList as $post) {
+            $author = $objAuthorMapper->getById($post->getAuthorId());
+
+            $arrListPosts_ReadDB[] = [
+                "headerPost" => $post->getPostItem(),
+                "authorPost_LastName" => $author->getSurname(),
+                "authorPost_FirstName" => $author->getName()
+            ];
         }
 
         return $arrListPosts_ReadDB;

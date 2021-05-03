@@ -17,7 +17,7 @@ class PostsController extends Controller
         $objPostsModel = new PostsModel();
 
         //$currentPageData = $objPostsModel->returnListInFile();
-        $currentPageData = $objPostsModel->returnListInDB();
+        $currentPageData = $objPostsModel->returnListPostsInDB();
 
         $this->action(__CLASS__, __METHOD__, $layoutPath, $layoutData, $currentPageData);
     }
