@@ -2,10 +2,8 @@
 
 namespace Mailman\Mvcframework\Application\Models;
 
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/AuthorMapper.php";
 require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/PostMapper.php";
 
-use Mailman\Mvcframework\library\WorkingWithDB\AuthorMapper;
 use Mailman\Mvcframework\library\WorkingWithDB\PostMapper;
 
 class PostsModel
@@ -23,7 +21,6 @@ class PostsModel
                 return null;
             }
 
-            //var_dump($arrListPosts_ReadFile);
             return $arrListPosts_ReadFile;
         }
 
@@ -31,31 +28,9 @@ class PostsModel
     }
 
     //getAllPosts
-    public function returnListPostsInDB()
+    public function getListPostsInDB()
     {
         //Получаем массив объектов Post
-        $objPostMapper = new PostMapper();
-        $postsList = $objPostMapper->returnAll();
-
-        return $this->convertToArrPost($postsList);
-    }
-
-    private function convertToArrPost($postsList)
-    {
-        $arrListPosts_ReadDB = array();
-
-        $objAuthorMapper = new AuthorMapper();
-
-        foreach ($postsList as $post) {
-            $author = $objAuthorMapper->getById($post->getAuthorId());
-
-            $arrListPosts_ReadDB[] = [
-                "headerPost" => $post->getPostItem(),
-                "authorPost_LastName" => $author->getSurname(),
-                "authorPost_FirstName" => $author->getName()
-            ];
-        }
-
-        return $arrListPosts_ReadDB;
+        return (new PostMapper())->getAllPosts();
     }
 }

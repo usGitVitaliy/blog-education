@@ -5,7 +5,7 @@ namespace Mailman\Mvcframework\library\WorkingWithDB;
 require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/MapperAbstract.php";
 require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/Author.php";
 
-class AuthorMapper extends MapperAbstract
+class AuthorsMapper extends MapperAbstract
 {
     public function getById(int $id): ?Author
     {
