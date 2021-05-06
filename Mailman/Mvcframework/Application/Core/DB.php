@@ -13,7 +13,7 @@ class DB
 
     public function __construct()
     {
-        $arrConnectionData = require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/Application/configs/db-connection-data.php";
+        $arrConnectionData = require PATH_SERVER_ROOT . "/Mailman/Mvcframework/Application/configs/db-connection-data.php";
 
         $this->host = $arrConnectionData["host"];
         $this->db = $arrConnectionData["db"];

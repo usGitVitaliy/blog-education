@@ -10,7 +10,7 @@
                 <label for="password-user">Пароль</label>
                 <input type="password" class="form-control" id="password-user" />
             </div>
-            <button type="submit" class="btn btn-primary">Войти</button>
+            <button type="submit" class="btn btn-primary" disabled="disabled">Войти</button>
         </fieldset>
     </form>
 </div>
