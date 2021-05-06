@@ -8,6 +8,9 @@ use Mailman\Mvcframework\library\WorkingWithDB\AuthorsMapper;
 
 class Convert
 {
+    /*
+     * Конвертирует массив объектов Post в массив постов
+     */
     public static function convertToArrayPageData(array $listPosts): array
     {
         $arrListPosts_ReadDB = array();

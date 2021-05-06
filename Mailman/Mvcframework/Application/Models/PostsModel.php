@@ -2,8 +2,10 @@
 
 namespace Mailman\Mvcframework\Application\Models;
 
+require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/Convert.php";
 require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/PostMapper.php";
 
+use Mailman\Mvcframework\library\Convert;
 use Mailman\Mvcframework\library\WorkingWithDB\PostMapper;
 
 class PostsModel
@@ -30,7 +32,7 @@ class PostsModel
     //getAllPosts
     public function getListPostsInDB()
     {
-        //Получаем массив объектов Post
-        return (new PostMapper())->getAllPosts();
+        //Получаем массив объектов Post и конвертируем в массив постов
+        return Convert::convertToArrayPageData((new PostMapper())->getAllPosts());
     }
 }
