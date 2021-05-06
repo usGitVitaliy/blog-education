@@ -2,10 +2,11 @@
 
 namespace Mailman\Mvcframework\Application\Models;
 
-//require_once "PATH_SERVER_ROOT/Mailman/Mvcframework/Application/Core/DB.php";
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/Application/Core/DB.php";
+require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/Convert.php";
+require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/PostMapper.php";
 
-use Mailman\Mvcframework\Application\Core\DB;
+use Mailman\Mvcframework\library\Convert;
+use Mailman\Mvcframework\library\WorkingWithDB\PostMapper;
 
 class PostsModel
 {
@@ -22,34 +23,16 @@ class PostsModel
                 return null;
             }
 
-            var_dump($arrListPosts_ReadFile);
             return $arrListPosts_ReadFile;
         }
 
         return null;
     }
 
-    public function returnListInDB()
+    //getAllPosts
+    public function getListPostsInDB()
     {
-        $dbObj = new DB();
-        $pdo = $dbObj->getConnetDB();
-        $stmt = $pdo->query(
-            'SELECT posts.post_item, authors.surname, authors.name 
-                        FROM posts, authors 
-                        WHERE posts.author_id = authors.id;');
-
-        $arrListPosts_ReadDB = array();
-
-        foreach ($stmt as $row) {
-            $rowListPosts_ReadDB = [
-                "headerPost" => $row["post_item"],
-                "authorPost_LastName" => $row["surname"],
-                "authorPost_FirstName" => $row["name"]
-            ];
-
-            array_push($arrListPosts_ReadDB, $rowListPosts_ReadDB);
-        }
-
-        return $arrListPosts_ReadDB;
+        //Получаем массив объектов Post и конвертируем в массив постов
+        return Convert::convertToArrayPageData((new PostMapper())->getAllPosts());
     }
 }
