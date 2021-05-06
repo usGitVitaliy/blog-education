@@ -2,9 +2,6 @@
 
 namespace Mailman\Mvcframework\Application\Models;
 
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/Convert.php";
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/PostMapper.php";
-
 use Mailman\Mvcframework\library\Convert;
 use Mailman\Mvcframework\library\WorkingWithDB\PostMapper;
 

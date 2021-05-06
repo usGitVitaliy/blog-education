@@ -2,8 +2,6 @@
 
 namespace Mailman\Mvcframework\library;
 
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/library/WorkingWithDB/AuthorsMapper.php";
-
 use Mailman\Mvcframework\library\WorkingWithDB\AuthorsMapper;
 
 class Convert
