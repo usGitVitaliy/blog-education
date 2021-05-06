@@ -2,8 +2,6 @@
 
 namespace Mailman\Mvcframework\Application\Controllers;
 
-require_once PATH_SERVER_ROOT . "/Mailman/Mvcframework/Application/Core/Controller.php";
-
 use Mailman\Mvcframework\Application\Core\Controller;
 
 class SiteController extends Controller
