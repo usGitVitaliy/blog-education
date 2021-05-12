@@ -38,7 +38,7 @@ a.disabled {
     background-color: darkslateblue;
 }
 
-form.autorization, .profile-container {
+form.autorization, .profile-container, #registration-specification {
     border: 2px solid LightSteelBlue;
     border-radius: 10px;
 }

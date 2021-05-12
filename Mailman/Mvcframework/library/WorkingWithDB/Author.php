@@ -5,15 +5,19 @@ namespace Mailman\Mvcframework\library\WorkingWithDB;
 //Entity
 class Author
 {
-    private int $id;
+    private ?int $id;
     private string $surname;
     private string $name;
+    private string $login;
+    private string $password;
 
-    public function __construct(int $id, string $surname, string $name)
+    public function __construct(string $surname, string $name, string $login, ?int $id = null, string $password = '')
     {
         $this->id = $id;
         $this->surname = $surname;
         $this->name = $name;
+        $this->login = $login;
+        $this->password = $password;
     }
 
     public function getId(): int
@@ -29,5 +33,15 @@ class Author
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 }
