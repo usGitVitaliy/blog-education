@@ -38,6 +38,8 @@ class Router
                 //echo "Найдено совпадение в таблице маршрутов";
                 $routeExplode = explode('/', $this->route);
 
+                //echo "{$this->route}<br /><br />";
+
                 //==> 3) определяем Controller и Action <==
                 $controller = ucfirst($routeExplode[0] . "Controller");
                 $action = $routeExplode[1] . "Action";
