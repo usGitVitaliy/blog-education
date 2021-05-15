@@ -11,7 +11,7 @@ class AuthorsMapper extends MapperAbstract
 
         $authorDB = $stmt->fetch();
 
-        if (isset($authorDB)) {
+        if ($authorDB) {
             return new Author($authorDB["surname"], $authorDB["name"], $authorDB["login"], $authorDB["id"]);
         }
 
@@ -51,5 +51,25 @@ class AuthorsMapper extends MapperAbstract
                 'password' => $author->getPassword()
             )
         );
+    }
+
+    public function getByLogin(string $login): ?Author
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM authors WHERE login = :login');
+        $stmt->execute(array('login' => $login));
+
+        $authorInDB = $stmt->fetch();
+
+        if ($authorInDB) {
+            return new Author(
+                $authorInDB["surname"],
+                $authorInDB["name"],
+                $authorInDB["login"],
+                $authorInDB["id"],
+                $authorInDB["password"]
+            );
+        }
+
+        return null;
     }
 }

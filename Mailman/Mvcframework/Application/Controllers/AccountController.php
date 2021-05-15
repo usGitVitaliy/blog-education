@@ -29,7 +29,7 @@ class AccountController extends Controller
     //***
     //валидация: логин должен быть введен цифрами и английскими символами, начинать с буквы
     //валидация: введенный логин не должен присутствовать в БД
-    public function validateAction()
+    public function validateRegistrationAction()
     {
         $layoutPath = LAYOUTS_PATH . "default/layout.php";
 
@@ -88,5 +88,88 @@ class AccountController extends Controller
         }
 
         return false;
+    }
+
+    public function validateLoginAction()
+    {
+        $layoutPath = LAYOUTS_PATH . "default/layout.php";
+
+        $layoutData = ["title" => "Авторизация", "currentPage--nav-a" => "Логин",];
+        $view_FilePath = VIEW_PATH . "/Account/validateLogin.php";
+
+        if (
+            array_key_exists("login-user", $_POST) &&
+            array_key_exists("password-user", $_POST)
+        ) {
+            if ($_POST["login-user"] === '' || $_POST["password-user"] === '') {
+                //echo "Не введен логин или пароль<br>";
+                //$view_FilePath = VIEW_PATH . "/Account/validateLogin.php";
+                $layoutData["info-bar"] = "Не введен логин или пароль";
+            } else {
+                $authorsModel = new AuthorsModel();
+                $author = $authorsModel->getAuthorByLogin($_POST["login-user"]);
+
+                if ($author != null) {
+                    //echo "Автор есть<br />";
+
+                    if ($author->getPassword() === $_POST["password-user"]) {
+                        //автор залогинен
+                        session_start();
+                        $_SESSION["username"] = $author->getName();
+
+                        header("Location: /"); /* Перенаправление браузера */
+
+                        /* Убедиться, что код ниже не выполнится после перенаправления .*/
+                        exit;
+
+                        //пользователь залогинен
+
+                        //$view_FilePath = VIEW_PATH . "/Account/logged-in.php";
+                    } else {
+                        $layoutData["logged-in"] = false;
+                        $layoutData["info-bar"] = "Неверный пароль";
+                    }
+                } else {
+                    //echo "Автора нет в базе<br />";
+                    $layoutData["info-bar"] = "Введенный логин отсутствует";
+                }
+            }
+        }
+
+        View::renderPage($layoutPath, $view_FilePath, $layoutData, $layoutData);
+    }
+
+    public function loggedOutAction()
+    {
+        // Инициализируем сессию.
+        // Если вы используете session_name("something"), не забудьте добавить это перед session_start()!
+        session_start();
+
+        // Удаляем все переменные сессии.
+        $_SESSION = array();
+
+        // Если требуется уничтожить сессию, также необходимо удалить сессионные cookie.
+        // Замечание: Это уничтожит сессию, а не только данные сессии!
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+// Наконец, уничтожаем сессию.
+        session_destroy();
+
+        //header("Location: http://blog-education.com"); /* Перенаправление браузера */
+        header("Location: /"); /* Перенаправление браузера */
+
+        /* Убедиться, что код ниже не выполнится после перенаправления .*/
+        exit;
     }
 }
