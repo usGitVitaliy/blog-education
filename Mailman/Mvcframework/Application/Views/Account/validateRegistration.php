@@ -11,7 +11,7 @@ echo <<<SPECIFICATION
         }
     </script>
 
-<div id="registration-specification" class="col m-3">
+<div class="col m-3 info-bar">
 SPECIFICATION;
 
 

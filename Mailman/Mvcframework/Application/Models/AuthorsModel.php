@@ -28,4 +28,9 @@ class AuthorsModel
     {
         (new AuthorsMapper())->insertAuthor($author);
     }
+
+    public function getAuthorByLogin(string $login): ?Author
+    {
+        return (new AuthorsMapper())->getByLogin($login);
+    }
 }

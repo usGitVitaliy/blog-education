@@ -13,8 +13,12 @@ main {
     margin-bottom: 40px;
 }
 
-a.nav-link {
+a.nav-link, span.nav-link {
     color: rgb(255, 255, 224) !important;
+}
+
+span.logined, a.logined {
+    color: orange !important;
 }
 
 a.nav-link:hover {
@@ -38,7 +42,7 @@ a.disabled {
     background-color: darkslateblue;
 }
 
-form.autorization, .profile-container, #registration-specification {
+form.autorization, .profile-container, .info-bar {
     border: 2px solid LightSteelBlue;
     border-radius: 10px;
 }

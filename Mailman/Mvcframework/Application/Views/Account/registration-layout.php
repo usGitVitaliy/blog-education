@@ -32,6 +32,6 @@
                 <label for="password-user-confirm">Подтверждение пароля</label>
                 <input type="password" class="form-control" id="password-user-confirm" name="password-user-confirm" />
             </div>
-            <button type="submit" class="btn btn-primary">Регистрация</button>
+            <button type="submit" class="btn btn-primary" id="submit-registration">Регистрация</button>
         </fieldset>
     </form>

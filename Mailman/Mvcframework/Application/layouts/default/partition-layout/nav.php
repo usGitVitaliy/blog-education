@@ -15,7 +15,7 @@
 
 //вставка навигации
 //--BEGIN-->>
-            $navigationContent = <<<NAV
+            $navigationContent = <<<NAVBEGIN
             <li class="nav-item">
                 <a href="/" class="nav-link">Главная</a>
             </li>
@@ -26,12 +26,38 @@
                 <a href="/site/about" class="nav-link">О проекте</a>
             </li>
             <li class="nav-item">
-                <a href="/account/login" class="nav-link">Логин</a>
+NAVBEGIN;
+
+            if (empty(session_id())) {
+                session_start();
+            }
+
+            $loginPrint = "Логин";
+
+            if (isset($_SESSION["username"])) {
+                $navigationContent .= <<<LOGINED1
+                <a href="#" class="nav-link">Профиль</a>
             </li>
-            <li class="nav-items">
+            <li class="nav-item">
+                <span class="logined disabled nav-link">{$_SESSION["username"]}</span>
+            </li>
+            <li class="nav-item">
+                <a href="/account/loggedout" id="login-link" class="logined nav-link">Выход
+LOGINED1;
+                //session_write_close();
+            } else {
+                $navigationContent .= <<<LOGINED2
                 <a href="/account/registration" class="nav-link">Регистрация</a>
             </li>
-NAV;
+            <li class="nav-item">
+                <a href="/account/login" id="login-link" class="nav-link">Логин
+LOGINED2;
+            }
+
+            $navigationContent .= <<<NAVEND
+                </a>
+            </li>
+NAVEND;
 //--END-->>
             //добавляем disabled к ссылке активной страницы
             //<a href="../content/main.php" class="nav-link">Главная</a>
@@ -41,10 +67,12 @@ NAV;
 
             //$layoutData = ["title" => "Правила", "currentPage--nav-a" => "Правила"]
 
-            $searchPattern = "#class=\"nav-link\">{$layoutData["currentPage--nav-a"]}#";
+            //$searchPattern = "#class=\"nav-link\">{$layoutData["currentPage--nav-a"]}#";
+            $searchPattern = "#nav-link\">{$layoutData["currentPage--nav-a"]}#";
             $navigationContent = preg_replace(
                 $searchPattern,
-                "class=\"nav-link disabled\">{$layoutData["currentPage--nav-a"]}",
+                //"class=\"nav-link disabled\">{$layoutData["currentPage--nav-a"]}",
+                "nav-link disabled\">{$layoutData["currentPage--nav-a"]}",
                 $navigationContent
             );
 
