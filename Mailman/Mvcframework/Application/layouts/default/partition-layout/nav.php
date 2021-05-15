@@ -36,7 +36,7 @@ NAVBEGIN;
 
             if (isset($_SESSION["username"])) {
                 $navigationContent .= <<<LOGINED1
-                <a href="#" class="nav-link">Профиль</a>
+                <a href="/profile/view" class="nav-link">Профиль</a>
             </li>
             <li class="nav-item">
                 <span class="logined disabled nav-link">{$_SESSION["username"]}</span>

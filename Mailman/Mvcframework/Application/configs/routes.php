@@ -12,5 +12,6 @@ return [
     "registration/validate" => "account/validateRegistration",
     "login/validate" => "account/validateLogin",
     "account/loggedout" => "account/loggedOut",
+    "profile/view" => "profile/view",
     "" => "posts/list"
 ];
