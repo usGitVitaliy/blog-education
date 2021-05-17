@@ -11,9 +11,8 @@ echo <<<SPECIFICATION
         }
     </script>
 
-<div class="col m-3 info-bar">
+<div id="registration-specification" class="col m-3 info-bar">
 SPECIFICATION;
-
 
 if (isset($layoutData["registration-specification"])) {
     echo $layoutData["registration-specification"];

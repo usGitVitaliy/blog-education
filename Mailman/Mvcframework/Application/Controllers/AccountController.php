@@ -3,6 +3,7 @@
 namespace Mailman\Mvcframework\Application\Controllers;
 
 use Mailman\Mvcframework\Application\Core\Controller;
+use Mailman\Mvcframework\Application\Logic\ValidateFormInput;
 use Mailman\Mvcframework\Application\Models\AuthorsModel;
 use Mailman\Mvcframework\library\WorkingWithDB\Author;
 use Mailman\Mvcframework\Application\Core\View;
@@ -38,15 +39,49 @@ class AccountController extends Controller
             "currentPage--nav-a" => "Регистрация",
         ];
 
+        $layoutData["registration-specification"] = "";
+
+        //проверяем
+        $inputFormData = array(
+            'lastName' => 'lastname-user', // фамилию
+            'firstName' => 'firstname-user', // имя
+            'password' => 'password-user' // пароль
+        );
+
+        foreach ($inputFormData as $inputVariable => $inputFormName) {
+            $$inputVariable = "";
+
+            if (isset($_POST[$inputFormName])) {
+                $$inputVariable = htmlspecialchars($_POST[$inputFormName]);
+            }
+
+            if (!ValidateFormInput::$inputVariable($$inputVariable, $layoutData["registration-specification"])) {
+                $view_FilePath = VIEW_PATH . "/Account/validateRegistration.php";
+                View::renderPage($layoutPath, $view_FilePath, $layoutData, $layoutData);
+                return;
+            }
+        }
+
+        $passwordUserConfirm = "";
+        if (isset($_POST["password-user-confirm"])) {
+            $passwordUserConfirm = $_POST["password-user-confirm"];
+        }
+
+        if ($$inputVariable !== $passwordUserConfirm) {
+            $layoutData["registration-specification"] = "Введенные пароли не совпадают";
+            $view_FilePath = VIEW_PATH . "/Account/validateRegistration.php";
+            View::renderPage($layoutPath, $view_FilePath, $layoutData, $layoutData);
+            return;
+        }
+
         if (isset($_POST["login-user"])) {
-            $login = $_POST["login-user"];
+            $login = htmlspecialchars($_POST["login-user"]);
         } else {
             $login = "";
         }
 
         if (preg_match("#^[a-zA-Z]\w{2,}$#", $login)) {
             //echo "Логин введен правильно<br><br>";
-
             $authorModel = new AuthorsModel();
 
             if (!$this->loginContainsInDataBase($login, $authorModel->getArrayAllLogins())) {
@@ -116,6 +151,7 @@ class AccountController extends Controller
                         //автор залогинен
                         session_start();
                         $_SESSION["username"] = $author->getName();
+                        session_write_close();
 
                         header("Location: /"); /* Перенаправление браузера */
 
@@ -123,10 +159,7 @@ class AccountController extends Controller
                         exit;
 
                         //пользователь залогинен
-
-                        //$view_FilePath = VIEW_PATH . "/Account/logged-in.php";
                     } else {
-                        $layoutData["logged-in"] = false;
                         $layoutData["info-bar"] = "Неверный пароль";
                     }
                 } else {

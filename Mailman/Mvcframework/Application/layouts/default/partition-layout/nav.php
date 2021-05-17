@@ -28,9 +28,7 @@
             <li class="nav-item">
 NAVBEGIN;
 
-            if (empty(session_id())) {
-                session_start();
-            }
+            session_start();
 
             $loginPrint = "Логин";
 
@@ -44,7 +42,6 @@ NAVBEGIN;
             <li class="nav-item">
                 <a href="/account/loggedout" id="login-link" class="logined nav-link">Выход
 LOGINED1;
-                //session_write_close();
             } else {
                 $navigationContent .= <<<LOGINED2
                 <a href="/account/registration" class="nav-link">Регистрация</a>
@@ -53,6 +50,7 @@ LOGINED1;
                 <a href="/account/login" id="login-link" class="nav-link">Логин
 LOGINED2;
             }
+            session_write_close();
 
             $navigationContent .= <<<NAVEND
                 </a>
