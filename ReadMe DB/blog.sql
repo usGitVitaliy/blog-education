@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Апр 27 2021 г., 15:52
+-- Время создания: Май 17 2021 г., 13:08
 -- Версия сервера: 8.0.23-0ubuntu0.20.04.1
 -- Версия PHP: 7.4.3
 
@@ -29,23 +29,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `authors` (
   `id` int UNSIGNED NOT NULL,
-  `surname` varchar(30) NOT NULL DEFAULT '',
-  `name` varchar(30) NOT NULL DEFAULT ''
+  `surname` char(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `name` char(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `login` char(25) NOT NULL DEFAULT '',
+  `password` char(15) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `authors`
 --
 
-INSERT INTO `authors` (`id`, `surname`, `name`) VALUES
-(1, 'Пупыкин', 'Вася'),
-(2, 'Иванов', 'Гриша'),
-(3, 'Петров', 'Федя'),
-(4, 'Маслова', 'Светлана'),
-(5, 'Бойко', 'Ирина'),
-(6, 'Нестеренко', 'Богдан'),
-(7, 'Обиван', 'Кенобе'),
-(8, 'Степаненко', 'Марина');
+INSERT INTO `authors` (`id`, `surname`, `name`, `login`, `password`) VALUES
+(1, 'Пупыкин', 'Вася', 'pupok', 'pupo'),
+(2, 'Иванов', 'Гриша', 'iva', 'ivan'),
+(3, 'Петров', 'Федя', 'flash', 'flash'),
+(4, 'Маслова', 'Светлана', 'svetik', 'svet'),
+(5, 'Бойко', 'Ирина', 'boka', 'boka'),
+(6, 'Нестеренко', 'Богдан', 'ice', 'icem'),
+(7, 'Обиван', 'Кенобе', 'yoda', 'yoda'),
+(8, 'Степаненко', 'Марина', 'marina', 'marina'),
+(9, 'Казявкин', 'Федя', 'Kazan', '1132');
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,8 @@ INSERT INTO `posts` (`id`, `author_id`, `post_item`) VALUES
 --
 ALTER TABLE `authors`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
+  ADD UNIQUE KEY `id` (`id`),
+  ADD UNIQUE KEY `login` (`login`);
 
 --
 -- Индексы таблицы `posts`
@@ -100,13 +104,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT для таблицы `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
