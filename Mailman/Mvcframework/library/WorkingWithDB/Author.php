@@ -6,10 +6,11 @@ namespace Mailman\Mvcframework\library\WorkingWithDB;
 class Author
 {
     private ?int $id;
-    private string $surname;
-    private string $name;
+    public string $surname;
+    public string $name;
     private string $login;
-    private string $password;
+    public string $password;
+    public ?string $photo = null;
 
     public function __construct(string $surname, string $name, string $login, ?int $id = null, string $password = '')
     {
