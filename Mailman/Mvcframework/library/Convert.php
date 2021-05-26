@@ -2,6 +2,7 @@
 
 namespace Mailman\Mvcframework\library;
 
+use Mailman\Mvcframework\library\WorkingWithDB\Author;
 use Mailman\Mvcframework\library\WorkingWithDB\AuthorsMapper;
 
 class Convert
@@ -9,7 +10,7 @@ class Convert
     /*
      * Конвертирует массив объектов Post в массив постов
      */
-    public static function convertToArrayPageData(array $listPosts): array
+    public static function convertToArrayPageDataListPosts(array $listPosts): array
     {
         $arrListPosts_ReadDB = array();
 
@@ -26,5 +27,17 @@ class Convert
         }
 
         return $arrListPosts_ReadDB;
+    }
+
+    public static function convertToArrayAuthorFields(Author $author)
+    {
+        $authorFiels = array();
+
+        $authorFiels["surname"] = $author->getSurname();
+        $authorFiels["name"] = $author->getName();
+        $authorFiels["login"] = $author->getLogin();
+        $authorFiels["photo"] = $author->photo;
+
+        return $authorFiels;
     }
 }

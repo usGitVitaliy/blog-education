@@ -33,4 +33,9 @@ class AuthorsModel
     {
         return (new AuthorsMapper())->getByLogin($login);
     }
+
+    public function modificationAuthor(Author $author)
+    {
+        (new AuthorsMapper())->updateAuthor($author);
+    }
 }

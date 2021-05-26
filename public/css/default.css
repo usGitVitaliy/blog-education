@@ -52,3 +52,7 @@ form.autorization, .profile-container, .info-bar {
     height: 320px;
     background-color: lightsteelblue;
 }
+
+button.edit {
+    text-decoration: underline !important;
+}
