@@ -52,11 +52,11 @@ class AccountController extends Controller
             $$inputVariable = "";
 
             if (isset($_POST[$inputFormName])) {
-                $$inputVariable = htmlspecialchars($_POST[$inputFormName]);
+                $$inputVariable = $_POST[$inputFormName];
             }
 
             if (!ValidateFormInput::$inputVariable($$inputVariable, $layoutData["registration-specification"])) {
-                $view_FilePath = VIEW_PATH . "/Account/validateRegistration.php";
+                $view_FilePath = VIEW_PATH . "Account/validateRegistration.php";
                 View::renderPage($layoutPath, $view_FilePath, $layoutData, $layoutData);
                 return;
             }
@@ -69,13 +69,13 @@ class AccountController extends Controller
 
         if ($$inputVariable !== $passwordUserConfirm) {
             $layoutData["registration-specification"] = "Введенные пароли не совпадают";
-            $view_FilePath = VIEW_PATH . "/Account/validateRegistration.php";
+            $view_FilePath = VIEW_PATH . "Account/validateRegistration.php";
             View::renderPage($layoutPath, $view_FilePath, $layoutData, $layoutData);
             return;
         }
 
         if (isset($_POST["login-user"])) {
-            $login = htmlspecialchars($_POST["login-user"]);
+            $login = $_POST["login-user"];
         } else {
             $login = "";
         }
@@ -86,7 +86,7 @@ class AccountController extends Controller
 
             if (!$this->loginContainsInDataBase($login, $authorModel->getArrayAllLogins())) {
                 //echo "Логина нет в базе<br>";
-                $view_FilePath = VIEW_PATH . "/Account/registered.html";
+                $view_FilePath = VIEW_PATH . "Account/registered.html";
 
                 $author = new Author(
                     $_POST["lastname-user"],
@@ -99,13 +99,13 @@ class AccountController extends Controller
                 $authorModel->addAuthorToDB($author);
             } else {
                 //echo "Логин есть в базе !!!!!!!!!!!!!!<br>";
-                $view_FilePath =  VIEW_PATH . "/Account/registration.php";
+                $view_FilePath =  VIEW_PATH . "Account/registration.php";
                 $layoutData["login-is-present"] = ": <span style='color: red;'>введенный логин уже существует</span>";
             }
         } else {
             //echo "Логин введен НЕ правильно<br><br>";
 
-            $view_FilePath = VIEW_PATH . "/Account/validateRegistration.php";
+            $view_FilePath = VIEW_PATH . "Account/validateRegistration.php";
             $layoutData["login-is-present"] = ": <span style='color: red;'>логин введен не верно</span>";
             $layoutData["registration-specification"] = "Логин должен состоять из английских букв, цифр и начинаться с 
             буквы, состоять минимум из трех символов";
@@ -130,7 +130,7 @@ class AccountController extends Controller
         $layoutPath = LAYOUTS_PATH . "default/layout.php";
 
         $layoutData = ["title" => "Авторизация", "currentPage--nav-a" => "Логин",];
-        $view_FilePath = VIEW_PATH . "/Account/validateLogin.php";
+        $view_FilePath = VIEW_PATH . "Account/validateLogin.php";
 
         if (
             array_key_exists("login-user", $_POST) &&
@@ -151,6 +151,7 @@ class AccountController extends Controller
                         //автор залогинен
                         session_start();
                         $_SESSION["username"] = $author->getName();
+                        $_SESSION["login"] = $author->getLogin();
                         session_write_close();
 
                         header("Location: /"); /* Перенаправление браузера */

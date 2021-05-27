@@ -22,8 +22,6 @@ class AuthorsMapper extends MapperAbstract
     {
         $stmt = $this->pdo->query("SELECT * FROM authors");
 
-        //echo "<br>";
-
         $arrayAuthors = array();
 
         foreach ($stmt as $row) {
@@ -53,6 +51,27 @@ class AuthorsMapper extends MapperAbstract
         );
     }
 
+    public function updateAuthor(Author $author)
+    {
+        $SQL_query = "UPDATE authors 
+                        SET surname = :surname,
+                            name = :name,
+                            password = :password,
+                            photo = :photo
+                        WHERE login = :login";
+
+        $stmt = $this->pdo->prepare($SQL_query);
+        $stmt->execute(
+            array(
+                'surname' => $author->getSurname(),
+                'name' => $author->getName(),
+                'login' => $author->getLogin(),
+                'password' => $author->getPassword(),
+                'photo' => $author->photo
+            )
+        );
+    }
+
     public function getByLogin(string $login): ?Author
     {
         $stmt = $this->pdo->prepare('SELECT * FROM authors WHERE login = :login');
@@ -61,13 +80,17 @@ class AuthorsMapper extends MapperAbstract
         $authorInDB = $stmt->fetch();
 
         if ($authorInDB) {
-            return new Author(
+            $author = new Author(
                 $authorInDB["surname"],
                 $authorInDB["name"],
                 $authorInDB["login"],
                 $authorInDB["id"],
-                $authorInDB["password"]
+                $authorInDB["password"],
             );
+
+            $author->photo = $authorInDB["photo"];
+
+            return $author;
         }
 
         return null;

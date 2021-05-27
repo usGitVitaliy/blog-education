@@ -30,6 +30,6 @@ class PostsModel
     public function getListPostsInDB()
     {
         //Получаем массив объектов Post и конвертируем в массив постов
-        return Convert::convertToArrayPageData((new PostMapper())->getAllPosts());
+        return Convert::convertToArrayPageDataListPosts((new PostMapper())->getAllPosts());
     }
 }
