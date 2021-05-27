@@ -41,7 +41,7 @@ class ValidateFormInput
             return false;
         }
 
-        if (!preg_match("#^.{4,15}$#", $password)) {
+        if (!preg_match("#^\S{4,15}$#", $password)) {
             $errorDescription = "Пароль должен состоять от 4 до 15 символов и не содержать пробелов";
             return false;
         }

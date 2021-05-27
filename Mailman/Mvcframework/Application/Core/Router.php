@@ -71,7 +71,8 @@ class Router
                     echo "ОШИБКА! Отсутствует файл с определением Класса Контроллера<br />";
                 }
             } else {
-                echo "ОШИБКА! Отсутствует маршрут в таблице маршрутов<br />";
+                //echo "ОШИБКА! Отсутствует маршрут в таблице маршрутов<br />";
+                $this->page404();
             }
         } else {
             echo "ОШИБКА! Отсутсвует таблица маршрутов<br />";
@@ -88,5 +89,13 @@ class Router
         }
 
         return false;
+    }
+
+    private function page404()
+    {
+        $layoutData = ["title" => "404", "currentPage--nav-a" => "1"];
+
+        $viewPath = VIEW_PATH . "page404.html";
+        require_once LAYOUTS_PATH . "default/layout.php";
     }
 }

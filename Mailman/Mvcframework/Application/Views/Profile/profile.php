@@ -38,67 +38,69 @@ if (isset($layoutData["info-bar"])) {
 }
 
 ?>
+</div>
 <script type="text/javascript">
+    let functionLoadContentInDivEdit = function (result) {
+        $('#edit').css("display", "block");
+        $('#edit').html(result);
+    };
+
+    function upDivIdEdit()
+    {
+        let offsetY = document.getElementById("edit").offsetTop;
+        window.scrollTo(0, offsetY);
+    }
+
     $(document).ready(function () {
+        /*
+        //оригинальная версия
         $('#edit-surname').click(function () {
             $.ajax({
                 url: "/ajax/edit-surname",
                 success: function (result) {
-                        $('#edit').css("display", "block");
-                        $('#edit').html(result);
+                    $('#edit').css("display", "block");
+                    $('#edit').html(result);
                 },
-                complete: function () {
-                    let offsetY = document.getElementById("edit").offsetTop;
-                    window.scrollTo(0, offsetY);
+                complete: function (result) {
+                    $('#edit').css("display", "block");
+                    $('#edit').html(result);
                 }
+            });
+        });
+        //*/
+
+        $('#edit-surname').click(function () {
+            $.ajax({
+                url: "/ajax/edit-surname",
+                success: functionLoadContentInDivEdit,
+                complete: upDivIdEdit
             });
         });
 
         $('#edit-name').click(function () {
             $.ajax({
                 url: "/ajax/edit-name",
-                success: function (result) {
-                    $('#edit').css("display", "block");
-                    $('#edit').html(result);
-                },
-                complete: function () {
-                    let offsetY = document.getElementById("edit").offsetTop;
-                    window.scrollTo(0, offsetY);
-                }
+                success: functionLoadContentInDivEdit,
+                complete: upDivIdEdit
             });
         });
 
         $('#edit-password').click(function () {
             $.ajax({
                 url: "/ajax/edit-password",
-                success: function (result) {
-                    $('#edit').css("display", "block");
-                    $('#edit').html(result);
-                },
-                complete: function () {
-                    let offsetY = document.getElementById("edit").offsetTop;
-                    window.scrollTo(0, offsetY);
-                }
+                success: functionLoadContentInDivEdit,
+                complete: upDivIdEdit
             });
         });
 
         $('#download-image').click(function () {
             $.ajax({
                 url: "/ajax/download-photo",
-                success: function (result) {
-                    $('#edit').css("display", "block");
-                    $('#edit').html(result);
-                },
-                complete: function () {
-                    let offsetY = document.getElementById("edit").offsetTop;
-                    window.scrollTo(0, offsetY);
-                }
+                success: functionLoadContentInDivEdit,
+                complete: upDivIdEdit
             });
         });
     });
 
-    $('#edit').ready(function () {
-        let offsetY = document.getElementById("edit").offsetTop;
-        window.scrollTo(0, offsetY);
-    });
+    $('#edit').ready(upDivIdEdit);
 </script>

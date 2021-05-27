@@ -56,3 +56,7 @@ form.autorization, .profile-container, .info-bar {
 button.edit {
     text-decoration: underline !important;
 }
+
+span.page-error {
+    font-size: 32px;
+}

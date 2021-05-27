@@ -12,7 +12,7 @@ class ProfileController extends Controller
 {
     private string $layoutPath;
     private array $layoutData;
-    private array $currentPageData;
+    private ?array $currentPageData;
     private string $view_FilePath;
 
     public function __construct()
@@ -27,14 +27,14 @@ class ProfileController extends Controller
             $this->currentPageData = Convert::convertToArrayAuthorFields(
                 $authorsModelOject->getAuthorByLogin($_SESSION["login"])
             );
+            $this->view_FilePath = VIEW_PATH . "Profile/profile.php";
         } else {
-            echo "404";
-            return;
+            $this->view_FilePath = VIEW_PATH . "Profile/not-authorized.html";
+            $this->layoutData = ["title" => "Вы не авторизованы", "currentPage--nav-a" => "1"];
+            $this->currentPageData = null;
         }
 
         session_write_close();
-
-        $this->view_FilePath = VIEW_PATH . "Profile/profile.php";
     }
 
     public function viewAction()
@@ -91,6 +91,31 @@ class ProfileController extends Controller
     {
         $this->layoutData["info-bar"] = "";
 
+        $authorsModel = new AuthorsModel();
+
+        session_start();
+        $author = $authorsModel->getAuthorByLogin($_SESSION["login"]);
+        session_write_close();
+
+        if ($_POST["password"] === $author->password) {
+            if (ValidateFormInput::password($_POST["new-password"], $this->layoutData["info-bar"])) {
+                if ($_POST["new-password"] === $_POST["confirm-password"]) {
+                    $author->password = $_POST["new-password"];
+                    $authorsModel->modificationAuthor($author);
+                    $this->layoutData["info-bar"] = "Пароль изменен";
+                } else {
+                    $this->layoutData["info-bar"] = "Пароли не совпадают";
+                }
+            }
+        } else {
+            $this->layoutData["info-bar"] = "Старый пароль неверный";
+        }
+
+        View::renderPage($this->layoutPath, $this->view_FilePath, $this->layoutData, $this->currentPageData);
+
+        /*
+        $this->layoutData["info-bar"] = "";
+
         if (ValidateFormInput::password($_POST["password"], $this->layoutData["info-bar"])) {
             $this->layoutData["info-bar"] = "Пароль изменен";
 
@@ -105,13 +130,11 @@ class ProfileController extends Controller
         }
 
         View::renderPage($this->layoutPath, $this->view_FilePath, $this->layoutData, $this->currentPageData);
+        //*/
     }
 
     public function downloadPhotoAction()
     {
-        $this->layoutPath = LAYOUTS_PATH . "default/layout.php";
-        $this->layoutData = ["title" => "Профиль", "currentPage--nav-a" => "Профиль"];
-
         if (isset($_FILES["download-photo"])) {
             $originFileName = $_FILES["download-photo"]["name"];
             $filename = $_FILES["download-photo"]["tmp_name"];
@@ -146,23 +169,18 @@ class ProfileController extends Controller
 
                             $this->currentPageData["photo"] = $author->photo;
                         } else {
-                            //echo "ОШИБКА! Разрешение фото превышает размеры 320x320";
                             $this->layoutData["info-bar"] = "ОШИБКА! Разрешение фото превышает размеры 320x320";
                         }
                     } else {
-                        //echo "ОШИБКА! Неверный mime-тип файла";
                         $this->layoutData["info-bar"] = "ОШИБКА! Неверный mime-тип файла";
                     }
                 } else {
-                    //echo "ОШИБКА! Файл не записан в диеркторию";
                     $this->layoutData["info-bar"] = "ОШИБКА! Файл не записан в диеркторию";
                 }
             } else {
-                //echo "ОШИБКА! Неверное разширение файла";
                 $this->layoutData["info-bar"] = "ОШИБКА! Неверное разширение файла";
             }
         } else {
-            //echo "ОШИБКА! Файл не введенн";
             $this->layoutData["info-bar"] = "ОШИБКА! Файл не введенн";
         }
 
