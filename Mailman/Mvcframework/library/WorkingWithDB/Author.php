@@ -10,7 +10,8 @@ class Author
     public string $name;
     private string $login;
     public string $password;
-    public ?string $photo = null;
+    //public ?string $photo = null;
+    public string $photo = '';
 
     public function __construct(string $surname, string $name, string $login, ?int $id = null, string $password = '')
     {
