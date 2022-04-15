@@ -37,8 +37,8 @@ class AuthorsMapper extends MapperAbstract
 
     public function insertAuthor(Author $author)
     {
-        $SQL_query = "INSERT INTO authors (surname, name, login, password) 
-                     VALUES (:surname, :name, :login, :password);";
+        $SQL_query = "INSERT INTO authors (surname, name, login, password, photo) 
+                     VALUES (:surname, :name, :login, :password, :photo);";
 
         $stmt = $this->pdo->prepare($SQL_query);
         $stmt->execute(
@@ -46,7 +46,8 @@ class AuthorsMapper extends MapperAbstract
                 'surname' => $author->getSurname(),
                 'name' => $author->getName(),
                 'login' => $author->getLogin(),
-                'password' => $author->getPassword()
+                'password' => $author->getPassword(),
+                'photo' => $author->photo
             )
         );
     }
